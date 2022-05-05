@@ -74,9 +74,10 @@ export default function Login() {
                                 sx={{ width: '90%' }}
                             />
                             <TextField
-                                label="Pass"
+                                label="Password"
                                 name="password"
                                 variant="outlined"
+                                type="password"
                                 value={values.password}
                                 onChange={handleInputChange}
                                 {...(errors.password && { error: true, helperText: errors.password })}

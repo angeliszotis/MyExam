@@ -1,13 +1,15 @@
+import { linearProgressClasses } from '@mui/material';
 import React, { createContext, useContext, useState, useEffect } from 'react'
 
 
 const stateContext = createContext();
 
 const getFreshContext = () => {
-    return {
-        id: 0,
-        selectedOptions: []
-    }
+    if (localStorage.getItem('context') === null)
+        localStorage.setItem('context', JSON.stringify({
+            // selectedOptions: []
+        }))
+    return JSON.parse(localStorage.getItem('context'))
 }
 
 export default function useStateContext() {
@@ -27,9 +29,9 @@ export default function useStateContext() {
 export function ContextProvider({ children }) {
     const [context, setContext] = useState(getFreshContext())
 
-    // useEffect(() => {
-    //     localStorage.setItem('context', JSON.stringify(context))
-    // }, [context])
+    useEffect(() => {
+        localStorage.setItem('context', JSON.stringify(context))
+    }, [context])
 
     return (
         <stateContext.Provider value={{ context, setContext }}>

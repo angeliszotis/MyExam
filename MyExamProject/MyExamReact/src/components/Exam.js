@@ -6,6 +6,6 @@ export default function Exam() {
     console.log(context)
 
     return (
-        <div>Exam</div>
+        <div>asdfasdf </div>
     )
 }
