@@ -79,10 +79,21 @@ namespace MyExamApi.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            var temp = _context.Users.Where(
+                x => x.Email == user.Email && x.Password == user.Password)
+                .FirstOrDefault();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            if (temp == null)
+            {
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+            }
+            else
+                user = temp;
+
+
+
+            return Ok(user);
         }
 
         // DELETE: api/User/5

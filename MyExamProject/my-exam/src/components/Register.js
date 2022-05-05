@@ -3,9 +3,7 @@ import { Box } from '@mui/system'
 import { Button, Card, CardContent, TextField, Typography } from '@mui/material'
 import Center from './Center'
 import useForm from "../hooks/useForm"
-import useStateContext from '../hooks/useStateContext'
 import { createAPIEndpoint, ENDPOINTS } from '../api'
-import { useNavigate } from 'react-router-dom'
 
 const getFreshModel = () => ({
     email: '',
@@ -17,8 +15,6 @@ const getFreshModel = () => ({
 
 export default function Login() {
 
-    const { context, setContext, resetContext } = useStateContext();
-    const navigate = useNavigate()
     const {
         values,
         setValues,
@@ -32,12 +28,7 @@ export default function Login() {
         if (validate())
             createAPIEndpoint(ENDPOINTS.user)
                 .post(values)
-                .then(res => {
-                    setContext({ id: res.data })
-                    navigate('exam')
-                    console.log(context)
-                }
-                )
+                .then(res => console.log(res))
                 .catch(err => console.log(err))
     }
 

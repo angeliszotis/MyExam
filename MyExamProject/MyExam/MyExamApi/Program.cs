@@ -16,9 +16,14 @@ options =>
     options.UseMySql(builder.Configuration.GetConnectionString("mydb"),
     Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.23-mysql"));
 });
-
-
 var app = builder.Build();
+
+app.UseCors(options =>
+options.WithOrigins("http://localhost:3000")
+.AllowAnyMethod()
+.AllowAnyHeader()
+);
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
