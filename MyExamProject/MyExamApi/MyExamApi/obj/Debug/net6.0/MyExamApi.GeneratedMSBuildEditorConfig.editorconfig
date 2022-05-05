@@ -8,53 +8,53 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MyExamApi
 build_property.RootNamespace = MyExamApi
-build_property.ProjectDir = C:\Users\Stelios\Documents\Projects\my_exam\MyExam\MyExamProject\MyExam\MyExamApi\
+build_property.ProjectDir = C:\Users\Stelios\Documents\Projects\my_exam\MyExam\MyExamProject\MyExamApi\MyExamApi\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Stelios\Documents\Projects\my_exam\MyExam\MyExamProject\MyExam\MyExamApi
+build_property.MSBuildProjectDirectory = C:\Users\Stelios\Documents\Projects\my_exam\MyExam\MyExamProject\MyExamApi\MyExamApi
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExam/MyExamApi/Views/Question/Create.cshtml]
+[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExamApi/MyExamApi/Views/Question/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVlc3Rpb25cQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExam/MyExamApi/Views/Question/Delete.cshtml]
+[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExamApi/MyExamApi/Views/Question/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVlc3Rpb25cRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExam/MyExamApi/Views/Question/Details.cshtml]
+[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExamApi/MyExamApi/Views/Question/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVlc3Rpb25cRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExam/MyExamApi/Views/Question/Edit.cshtml]
+[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExamApi/MyExamApi/Views/Question/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVlc3Rpb25cRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExam/MyExamApi/Views/Question/Index.cshtml]
+[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExamApi/MyExamApi/Views/Question/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVlc3Rpb25cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExam/MyExamApi/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExamApi/MyExamApi/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExam/MyExamApi/Views/User/Create.cshtml]
+[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExamApi/MyExamApi/Views/User/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExam/MyExamApi/Views/User/Delete.cshtml]
+[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExamApi/MyExamApi/Views/User/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExam/MyExamApi/Views/User/Details.cshtml]
+[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExamApi/MyExamApi/Views/User/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExam/MyExamApi/Views/User/Edit.cshtml]
+[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExamApi/MyExamApi/Views/User/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExam/MyExamApi/Views/User/Index.cshtml]
+[C:/Users/Stelios/Documents/Projects/my_exam/MyExam/MyExamProject/MyExamApi/MyExamApi/Views/User/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

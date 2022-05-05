@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LilUkqaRDCPbVJaqWHOd3jYlUc+274I1wq8idF8QvUeL8xh7/qeqTWTfBOadpqeJgkomD1MNfksVfpgVvbdklQ==",
+  "dgSpecHash": "JC1yqxvRcZiLkFk+K6zt+YgzhAcRTno6QQ8wdDVA7dsszGe34fnP/wHWhUi+K1+AipY92r6m+SAU/9yfHxerVg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExam\\MyExamApi\\MyExamApi.csproj",
+  "projectFilePath": "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExamApi\\MyExamApi\\MyExamApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Stelios\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Stelios\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExam\\MyExamApi\\MyExamApi.csproj": {}
+    "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExamApi\\MyExamApi\\MyExamApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExam\\MyExamApi\\MyExamApi.csproj": {
+    "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExamApi\\MyExamApi\\MyExamApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExam\\MyExamApi\\MyExamApi.csproj",
+        "projectUniqueName": "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExamApi\\MyExamApi\\MyExamApi.csproj",
         "projectName": "MyExamApi",
-        "projectPath": "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExam\\MyExamApi\\MyExamApi.csproj",
+        "projectPath": "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExamApi\\MyExamApi\\MyExamApi.csproj",
         "packagesPath": "C:\\Users\\Stelios\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExam\\MyExamApi\\obj\\",
+        "outputPath": "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExamApi\\MyExamApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Stelios\\AppData\\Roaming\\NuGet\\NuGet.Config",
