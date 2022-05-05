@@ -9824,11 +9824,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Stelios\\Documents\\Projects\\MyExam\\MyExamProject\\MyExam\\MyExamApi\\MyExamApi.csproj",
+      "projectUniqueName": "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExam\\MyExamApi\\MyExamApi.csproj",
       "projectName": "MyExamApi",
-      "projectPath": "C:\\Users\\Stelios\\Documents\\Projects\\MyExam\\MyExamProject\\MyExam\\MyExamApi\\MyExamApi.csproj",
+      "projectPath": "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExam\\MyExamApi\\MyExamApi.csproj",
       "packagesPath": "C:\\Users\\Stelios\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Stelios\\Documents\\Projects\\MyExam\\MyExamProject\\MyExam\\MyExamApi\\obj\\",
+      "outputPath": "C:\\Users\\Stelios\\Documents\\Projects\\my_exam\\MyExam\\MyExamProject\\MyExam\\MyExamApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Stelios\\AppData\\Roaming\\NuGet\\NuGet.Config",
