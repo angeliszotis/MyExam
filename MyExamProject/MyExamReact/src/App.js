@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Login from './components/Login';
 import Exam from './components/Exam';
-import Layout from './components/Layout';
+import Layout from './components/Layout_maybe';
 import Authenticate from './components/Authenticate';
 
 
@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<Layout />} >
           <Route path="/" element={<Authenticate />}>
             <Route path="/exam" element={<Exam />} />
-            <Route path="/exam" element={<Exam />} />
+            <Route path="/createExam" element={<CreateExam />} />
           </Route>
         </Route>
       </Routes>
