@@ -29,16 +29,20 @@ export default function Login() {
 
     const login = e => {
         e.preventDefault();
-        if (validate())
-            createAPIEndpoint(ENDPOINTS.user)
+        if (validate()) {
+            createAPIEndpoint(ENDPOINTS.login)
                 .post(values)
                 .then(res => {
-                    setContext({ id: res.data })
+                    setContext({
+                        id: res.data.id
+                    })
                     navigate('exam')
                     console.log(context)
                 }
                 )
-                .catch(err => console.log(err))
+                .catch(err => console.log(err)
+                )
+        }
     }
 
     const validate = () => {
@@ -55,7 +59,7 @@ export default function Login() {
                 <CardContent sx={{ textAlign: 'center' }}>
 
                     <Typography variant="h3" sx={{ my: 3 }}>
-                        Quiz app
+                        My exam
                     </Typography>
                     <Box sx={{
                         '& .MuiTextField-root': {

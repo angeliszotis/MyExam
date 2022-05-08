@@ -96,6 +96,42 @@ namespace MyExamApi.Controllers
             return Ok(user);
         }
 
+        [HttpPost]
+        [Route("Login")]
+        public async Task<ActionResult<User>> Login(User user)
+        {
+            var temp = _context.Users.Where(
+                x => x.Email == user.Email && x.Password == user.Password)
+                .FirstOrDefault();
+
+            if (temp == null)
+                return BadRequest("Email and password dont much");
+            else
+                user = temp;
+            return Ok(user);
+        }
+
+        [HttpPost]
+        [Route("Register")]
+        public async Task<ActionResult<User>> Register(User user)
+        {
+            var temp = _context.Users.Where(
+                x => x.Email == user.Email)
+                .FirstOrDefault();
+
+            if (temp == null)
+            {
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+                user = temp;
+            }
+            else
+                return BadRequest("Email already exists");
+
+            return Ok(user);
+        }
+
+
         // DELETE: api/User/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)

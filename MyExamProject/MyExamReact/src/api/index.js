@@ -5,6 +5,9 @@ export const BASE_URL = 'http://localhost:5257/';
 
 export const ENDPOINTS = {
     user: 'user',
+    login: 'user/login',
+    register: 'user/register',
+    exam: 'exam',
     question: 'question'
 }
 

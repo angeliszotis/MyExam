@@ -1,10 +1,10 @@
-import { Container, AppBar, Button, Toolbar, Typography, Link } from '@mui/material'
+
+import { AppBar, Button, Container, Toolbar, Typography } from '@mui/material'
 import React from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router'
 import useStateContext from '../hooks/useStateContext'
 
 export default function Layout() {
-
     const { resetContext } = useStateContext()
     const navigate = useNavigate()
 
@@ -16,22 +16,19 @@ export default function Layout() {
     return (
         <>
             <AppBar position="sticky">
-                <Toolbar sx={{ width: 1500, m: 'auto' }}>
+                <Toolbar sx={{ width: 640, m: 'auto' }}>
                     <Typography
                         variant="h4"
                         align="center"
-                        sx={{ flexGrow: 2 }}>
-                        My Exam
+                        sx={{ flexGrow: 1 }}>
+                        Quiz App
                     </Typography>
-                    <Link to="/signup">asdf</Link>
-                    <Button onClick={logout}> Logout </Button>
+                    <Button onClick={logout}>Logout</Button>
                 </Toolbar>
-
             </AppBar>
             <Container>
-
+                <Outlet />
             </Container>
-            <Outlet />
         </>
     )
 }

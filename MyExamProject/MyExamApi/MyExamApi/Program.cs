@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MyExam.Data;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,10 @@ options =>
     options.UseMySql(builder.Configuration.GetConnectionString("mydb"),
     Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.23-mysql"));
 });
+
+//builder.Services.AddMvc(option => option.EnableEndpointRouting = false)
+//    .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
 var app = builder.Build();
 
 app.UseCors(options =>
