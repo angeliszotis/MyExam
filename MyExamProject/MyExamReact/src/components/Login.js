@@ -36,7 +36,7 @@ export default function Login() {
                     setContext({
                         id: res.data.id
                     })
-                    navigate('exam')
+                    navigate('exams')
                     console.log(context)
                 }
                 )
