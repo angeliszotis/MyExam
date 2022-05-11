@@ -8,6 +8,7 @@ export const ENDPOINTS = {
     login: 'user/login',
     register: 'user/register',
     exam: 'exam',
+    answer: 'answer',
     question: 'question'
 }
 

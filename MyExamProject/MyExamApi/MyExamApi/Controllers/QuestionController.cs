@@ -23,25 +23,25 @@ namespace MyExamApi.Controllers
         }
 
         // GET: api/Question
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Question>>> GetQuestions()
+        [HttpGet("{selectedExam}")]
+        public async Task<ActionResult<IEnumerable<Question>>> GetQuestions(int selectedExam)
         {
-            return await _context.Questions.ToListAsync();
+            return await _context.Questions.Where(c => c.ExamId== selectedExam).ToListAsync();
         }
 
         // GET: api/Question/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Question>> GetQuestion(int id)
-        {
-            var question = await _context.Questions.FindAsync(id);
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Question>> GetQuestion(int id)
+        //{
+        //    var question = await _context.Questions.FindAsync(id);
 
-            if (question == null)
-            {
-                return NotFound();
-            }
+        //    if (question == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return question;
-        }
+        //    return question;
+        //}
 
         // PUT: api/Question/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

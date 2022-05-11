@@ -5,6 +5,7 @@ import Exams from './components/Exams';
 import Layout from './components/Layout';
 import Quiz from './components/Quiz';
 import Authenticate from './components/Authenticate';
+import Result from './components/Result';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route path="/exams" element={<Exams />} />
             <Route path="/quiz" element={<Quiz />} />
+            <Route path="/result" element={<Result />} />
           </Route>
         </Route>
       </Routes>
