@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import Quiz from './components/Quiz';
 import Authenticate from './components/Authenticate';
 import Result from './components/Result';
+import Register from './components/Register';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route element={<Authenticate />}>
           <Route path="/" element={<Layout />}>
             <Route path="/exams" element={<Exams />} />

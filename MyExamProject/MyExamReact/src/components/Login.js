@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/system'
-import { Button, Card, CardContent, TextField, Typography } from '@mui/material'
+import { Link, Button, Card, CardContent, TextField, Typography } from '@mui/material'
 import Center from './Center'
 import useForm from "../hooks/useForm"
 import useStateContext from '../hooks/useStateContext'
@@ -93,6 +93,9 @@ export default function Login() {
                                 size="large"
                                 sx={{ width: '90%' }}> Start
                             </Button>
+                            <Link component="button" underline='hover' onClick={() => navigate('/register')} variant="h6" sx={{ my: 3 }}>
+                                Click here to register
+                            </Link>
 
                         </form>
                     </Box>
