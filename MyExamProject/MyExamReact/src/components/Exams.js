@@ -59,6 +59,7 @@ export default function Exams() {
         console.log(examId)
         setContext({
             examid: examId
+
         })
         navigate('/quiz')
     }

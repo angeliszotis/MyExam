@@ -7,6 +7,10 @@ import Quiz from './components/Quiz';
 import Authenticate from './components/Authenticate';
 import Result from './components/Result';
 import Register from './components/Register';
+import CreateExam from './components/CreateExam';
+import Profile from './components/Profile';
+import MyGrades from './components/MyGrades';
+import MyCreatedExams from './components/MyCreatedExams';
 
 
 function App() {
@@ -20,6 +24,10 @@ function App() {
             <Route path="/exams" element={<Exams />} />
             <Route path="/quiz" element={<Quiz />} />
             <Route path="/result" element={<Result />} />
+            <Route path="/createexam" element={<CreateExam />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/mygrades" element={<MyGrades />} />
+            <Route path="/mycreatedexams" element={<MyCreatedExams />} />
           </Route>
         </Route>
       </Routes>
