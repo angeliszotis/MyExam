@@ -44,23 +44,23 @@ export default function Quiz() {
 
     }, [])
 
-    const updateAnswer = (qnId, optionIdx) => {
-        console.log(qnIndex)
-        console.log(qns.length)
+    const updateAnswer = (qnId, ansID) => {
+        // console.log(qnIndex)
+        // console.log(qns.length)
 
         const temp = [...context.selectedOptions]
         temp.push({
             questionId: qnId,
-            selected: optionIdx
+            answerId: ansID
         })
         if (qnIndex + 1 < qns.length) {
             setContext({ selectedOptions: [...temp] })
             setQnIndex(qnIndex + 1)
             createAPIEndpoint(ENDPOINTS.answer)
-                .fetchById(optionIdx + 1)
+                .fetchById(qnIndex)
                 .then(res => {
                     setAnswer(res.data)
-                    console.log(res.data)
+                    // console.log(res.data)
                 })
                 .catch(err => { console.log(err); })
         }
@@ -80,7 +80,7 @@ export default function Quiz() {
                     '& .MuiCardHeader-action': { m: 0, alignSelf: 'center' }
                 }}>
                 <CardHeader
-                    title={'Question ' + (qnIndex + 1)}
+                    title={'Question ' + (qnIndex + 1) + ' of ' + qns.length}
                     action={<Typography>{getFormatedTime(timeTaken)}</Typography>} />
                 <Box>
                     <LinearProgress variant="determinate" value={(qnIndex + 1) * 100 / qns.length} />
@@ -93,7 +93,7 @@ export default function Quiz() {
                     <List>
                         {answer.map((data, idx) => (
 
-                            <ListItemButton disableRipple key={idx} onClick={() => updateAnswer(qns[qnIndex].id, idx)}>
+                            <ListItemButton disableRipple key={idx} onClick={() => updateAnswer(qns[qnIndex].id, data.id)}>
                                 <div>
                                     <b>{String.fromCharCode(65 + idx) + " . "}</b>{data.title}
                                 </div>

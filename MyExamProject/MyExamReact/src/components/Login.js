@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box } from '@mui/system'
 import { Link, Button, Card, CardContent, TextField, Typography } from '@mui/material'
 import Center from './Center'
@@ -26,6 +26,10 @@ export default function Login() {
         setErrors,
         handleInputChange
     } = useForm(getFreshModel);
+
+    useEffect(() => {
+        resetContext()
+    }, [])
 
     const login = e => {
         e.preventDefault();
@@ -91,7 +95,7 @@ export default function Login() {
                                 type="submit"
                                 variant="contained"
                                 size="large"
-                                sx={{ width: '90%' }}> Start
+                                sx={{ width: '90%' }}> Login
                             </Button>
                             <Link component="button" underline='hover' onClick={() => navigate('/register')} variant="h6" sx={{ my: 3 }}>
                                 Click here to register

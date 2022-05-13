@@ -105,12 +105,11 @@ export default function Login() {
                                 {...(errors.password && { error: true, helperText: errors.password })}
                                 sx={{ width: '90%' }}
                             />
-
                             <Button
                                 type="submit"
                                 variant="contained"
                                 size="large"
-                                sx={{ width: '90%' }}> Start
+                                sx={{ width: '90%' }}> Register
                             </Button>
 
 

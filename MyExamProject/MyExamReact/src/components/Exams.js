@@ -86,7 +86,7 @@ export default function Exams() {
                         {qns
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((data, idx) => (
-                                <TableRow >
+                                <TableRow key={idx}>
                                     <TableCell >{data.name}</TableCell >
                                     <TableCell >{data.description}</TableCell >
                                     <TableCell >{data.owner}</TableCell >

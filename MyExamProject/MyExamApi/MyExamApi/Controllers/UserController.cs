@@ -121,6 +121,9 @@ namespace MyExamApi.Controllers
 
             if (temp == null)
             {
+                DateTime localDate = DateTime.Now;
+                user.Type = "user";
+                user.Date = localDate;
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
                 user = temp;
