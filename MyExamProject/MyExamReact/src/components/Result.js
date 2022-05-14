@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import { createAPIEndpoint, ENDPOINTS } from '../api'
 import { getFormatedTime } from '../helper';
 import useStateContext from '../hooks/useStateContext'
-import { green } from '@mui/material/colors';
+import { green, red } from '@mui/material/colors';
 
 
 
@@ -19,29 +19,24 @@ export default function Result() {
     useEffect(() => {
 
         createAPIEndpoint(ENDPOINTS.question)
-            .fetchById(1)
+            .fetchById(context.examid)
             .then(res => {
-                setQns(res.data)
+                setQns(res.data.length)
                 console.log(res.data)
-            })
+                const ids = context.selectedOptions.map(x => x.answerId)
+                createAPIEndpoint(ENDPOINTS.result)
+                    .post(ids)
+                    .then(res => {
+                        calculateScore(res.data)
+                        console.log(res.data)
+                    })
+                    .catch(err => console.log(err))
+            }, [])
             .catch(err => { console.log(err); })
+    })
 
-        const ids = context.selectedOptions.map(x => x.answerId)
-        createAPIEndpoint(ENDPOINTS.result)
-            .post(ids)
-            .then(res => {
-                calculateScore(res.data)
-            })
-            .catch(err => console.log(err))
-    }, [])
-    // console.log(context.examid)
-    //     useEffect(() => {
-    // 
-    //     }, [])
-
-    const calculateScore = correctAnswers => {
-        console.log(correctAnswers.length * 100 / qns.length)
-        setScore(correctAnswers.length * 100 / qns.length)
+    const calculateScore = (correctAnswers) => {
+        setScore((correctAnswers.length * 100 / qns).toFixed(1))
     }
 
     const restart = () => {
@@ -62,9 +57,9 @@ export default function Result() {
                             Your grade is
                         </Typography>
                         <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                            <Typography variant="span" color={green[500]}>
-                                {score}
-                            </Typography>%
+                            <Typography variant="span" color={score > 50 ? green[500] : red[500]}>
+                                {score} {score > 50 ? '% passed' : '% failed'}
+                            </Typography>
                         </Typography>
                         <Typography variant="h6">
                             Took {getFormatedTime(context.timeTaken) + ' mins'}
