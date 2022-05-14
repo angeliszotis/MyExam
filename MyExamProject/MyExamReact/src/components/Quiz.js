@@ -48,7 +48,7 @@ export default function Quiz() {
 
     }, [])
 
-    const updateAnswer = (qnId) => {
+    const updateAnswer = (qnId, AnsId, dataPoints) => {
 
         console.log(qnId)
         // console.log(qns.length + 'is ' + 'length is ' + length)
@@ -56,6 +56,8 @@ export default function Quiz() {
         const temp = [...context.selectedOptions]
         temp.push({
             questionId: qnId,
+            answerId: AnsId,
+            answerPoints: dataPoints
 
         })
         if (qnId < qns.length) {
@@ -85,20 +87,20 @@ export default function Quiz() {
                     '& .MuiCardHeader-action': { m: 0, alignSelf: 'center' }
                 }}>
                 <CardHeader
-                    // title={'Question ' + (qnIndex + 1) + ' of ' + qns.length}
+                    title={'Question ' + (qnIndex + 1) + ' of ' + qns.length}
                     action={<Typography>{getFormatedTime(timeTaken)}</Typography>} />
                 <Box>
-                    {/* <LinearProgress variant="determinate" value={(qns[qnIndex].id) * 100 / qns.length} /> */}
+                    <LinearProgress variant="determinate" value={(qns[qnIndex].id) * 100 / qns.length} />
                 </Box>
 
                 <CardContent>
                     <Typography variant="h6">
-                        {/* {qns[qnIndex].id} */}
+                        {qns[qnIndex].title}
                     </Typography>
                     <List>
                         {answer.map((data, idx) => (
 
-                            <ListItemButton disableRipple key={idx} onClick={() => updateAnswer(data.questionId)}>
+                            <ListItemButton disableRipple key={idx} onClick={() => updateAnswer(data.questionId, data.id, data.points)}>
                                 <div>
                                     <b>{String.fromCharCode(65 + idx) + " . "}</b>{data.title} {data.questionId}
                                 </div>
@@ -109,6 +111,8 @@ export default function Quiz() {
 
                 </CardContent>
             </Card>
-            : null
+            : <Typography variant="h8">
+                This exam is not setted up
+            </Typography>
     )
 }
