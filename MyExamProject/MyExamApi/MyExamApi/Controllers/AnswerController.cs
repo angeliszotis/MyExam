@@ -23,25 +23,27 @@ namespace MyExamApi.Controllers
         }
 
         // GET: api/Answer
-        [HttpGet("{getAnswers}")]
-        public async Task<ActionResult<IEnumerable<Answer>>> GetAnswers(int getAnswers)
+        [Route("retrieveAnswers/{id}")]
+        [HttpGet]
+  
+        public async Task<ActionResult<IEnumerable<Answer>>> GetAnswers(int id)
         {
-            return await _context.Answers.Where(c => c.QuestionId == getAnswers).ToListAsync();
+            return await _context.Answers.Where(c => c.QuestionId == id).ToListAsync();
         }
 
         // GET: api/Answer/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Answer>> GetAnswer(int id)
-        //{
-        //    var answer = await _context.Answers.FindAsync(id);
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Answer>> GetAnswer(int id)
+        {
+            var answer = await _context.Answers.FindAsync(id);
 
-        //    if (answer == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (answer == null)
+            {
+                return NotFound();
+            }
 
-        //    return answer;
-        //}
+            return answer;
+        }
 
         // PUT: api/Answer/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

@@ -9,7 +9,7 @@ export default function Quiz() {
 
     const [qns, setQns] = useState([])
     const [answer, setAnswer] = useState([])
-    const [qnIndex, setQnIndex] = useState(1)
+    const [qnIndex, setQnIndex] = useState(0)
     const [answerIndex, setAnswerIndex] = useState(0)
     const [timeTaken, setTimeTaken] = useState(0)
     const { context, setContext } = useStateContext()
@@ -24,40 +24,45 @@ export default function Quiz() {
     }
     useEffect(() => {
 
+        setContext({
+            timeTaken: 0,
+            selectedOptions: []
+        })
+
         createAPIEndpoint(ENDPOINTS.question)
             .fetchById(context.examid)
             .then(res => {
                 setQns(res.data)
                 startTimer()
-                // console.log(qns);
+                createAPIEndpoint(ENDPOINTS.answer)
+                    .fetchById(res.data[0].id)
+                    .then(res => {
+                        setAnswer(res.data)
+                    })
+                    .catch(err => { console.log(err); })
             })
             .catch(err => { console.log(err); })
 
-        createAPIEndpoint(ENDPOINTS.answer)
-            .fetchById(qnIndex)
-            .then(res => {
-                setAnswer(res.data)
-                // console.log(res.data)
-            })
-            .catch(err => { console.log(err); })
+
 
 
     }, [])
 
-    const updateAnswer = (qnId, ansID) => {
-        // console.log(qnIndex)
-        // console.log(qns.length)
+    const updateAnswer = (qnId) => {
+
+        console.log(qnId)
+        // console.log(qns.length + 'is ' + 'length is ' + length)
 
         const temp = [...context.selectedOptions]
         temp.push({
             questionId: qnId,
-            answerId: ansID
+
         })
-        if (qnIndex + 1 < qns.length) {
+        if (qnId < qns.length) {
             setContext({ selectedOptions: [...temp] })
             setQnIndex(qnIndex + 1)
             createAPIEndpoint(ENDPOINTS.answer)
-                .fetchById(qnIndex)
+                .fetchById(qnId + 1)
                 .then(res => {
                     setAnswer(res.data)
                     // console.log(res.data)
@@ -80,22 +85,22 @@ export default function Quiz() {
                     '& .MuiCardHeader-action': { m: 0, alignSelf: 'center' }
                 }}>
                 <CardHeader
-                    title={'Question ' + (qnIndex + 1) + ' of ' + qns.length}
+                    // title={'Question ' + (qnIndex + 1) + ' of ' + qns.length}
                     action={<Typography>{getFormatedTime(timeTaken)}</Typography>} />
                 <Box>
-                    <LinearProgress variant="determinate" value={(qnIndex + 1) * 100 / qns.length} />
+                    {/* <LinearProgress variant="determinate" value={(qns[qnIndex].id) * 100 / qns.length} /> */}
                 </Box>
 
                 <CardContent>
                     <Typography variant="h6">
-                        {qns[qnIndex].title}
+                        {/* {qns[qnIndex].id} */}
                     </Typography>
                     <List>
                         {answer.map((data, idx) => (
 
-                            <ListItemButton disableRipple key={idx} onClick={() => updateAnswer(qns[qnIndex].id, data.id)}>
+                            <ListItemButton disableRipple key={idx} onClick={() => updateAnswer(data.questionId)}>
                                 <div>
-                                    <b>{String.fromCharCode(65 + idx) + " . "}</b>{data.title}
+                                    <b>{String.fromCharCode(65 + idx) + " . "}</b>{data.title} {data.questionId}
                                 </div>
 
                             </ListItemButton>
