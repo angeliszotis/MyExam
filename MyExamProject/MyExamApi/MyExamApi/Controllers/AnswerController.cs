@@ -87,18 +87,37 @@ namespace MyExamApi.Controllers
             return CreatedAtAction("GetAnswer", new { id = answer.Id }, answer);
         }
 
+        //[Route("retrieveNumberOfAnswers")]
+        //[HttpPost]
+        //public async Task<ActionResult<Answer>> retrieveQuestions(int[] answerIds)
+        //{
+        //    var answers = await (_context.Answers.Where(x => answerIds.Contains(x.Id))
+        //    .Select(x => new
+        //    {
+        //        questionId = x.QuestionId,
+        //        answerId = x.Id,
+        //        correct = x.Correct
+        //    }
+
+        //        )).ToListAsync();
+
+        //    return Ok(answers);
+        //}
+
         // POST: api/Answer/retrieveCorrectAnswers
         [Route("retrieveCorrectAnswers")]
         [HttpPost]
-        public async Task<ActionResult<Answer>> retrieveCorrectAnswers(int [] answerIds)
+        public async Task<ActionResult<Answer>> retrieveCorrectAnswers(int[] answerIds)
         {
-            var answers = await (_context.Answers.Where(x => answerIds.Contains(x.QuestionId))
+            var answers = await (_context.Answers.Where(x => answerIds.Contains(x.Id))
             .Select(x => new
             {
-                QnId = x.QuestionId
+                questionId = x.QuestionId,
+                answerId = x.Id,
+                correct = x.Correct
             }
 
-                )).ToListAsync();
+                )).Where(x => x.correct == 1).ToListAsync();
 
             return Ok(answers);
         }

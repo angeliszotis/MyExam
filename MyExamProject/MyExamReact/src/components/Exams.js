@@ -48,7 +48,7 @@ export default function Exams() {
             .fetch()
             .then(res => {
                 setQns(res.data)
-                console.log(res.data)
+                // console.log(res.data)
             })
             .catch(err => { console.log(err); })
 
@@ -56,7 +56,7 @@ export default function Exams() {
     }, [])
 
     const startExam = (examId) => {
-        console.log(examId)
+        // console.log(examId)
         setContext({
             examid: examId
 

@@ -50,7 +50,7 @@ export default function Quiz() {
 
     const updateAnswer = (qnId, AnsId, dataPoints) => {
 
-        console.log(qnId)
+        // console.log(qnId)
         // console.log(qns.length + 'is ' + 'length is ' + length)
 
         const temp = [...context.selectedOptions]
@@ -72,7 +72,8 @@ export default function Quiz() {
                 .catch(err => { console.log(err); })
         }
         else {
-            setContext({ selectedOptions: [...temp], timeTaken })
+            let questionsCount = qnIndex + 1
+            setContext({ selectedOptions: [...temp], timeTaken, questionsCount })
             navigate("/result")
         }
     }

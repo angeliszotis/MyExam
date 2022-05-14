@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import useStateContext from '../hooks/useStateContext'
 import { Outlet, useNavigate } from 'react-router'
+import { CardMedia } from '@mui/material';
 
 
 let pages = [
@@ -86,7 +87,11 @@ const ResponsiveAppBar = () => {
                             component="div"
                             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
                         >
-                            LOGO
+                            <CardMedia
+                                component="img"
+                                sx={{ height: 60 }}
+                                image="./logo.png"
+                            />
                         </Typography>
 
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
