@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MyExam.Models
+namespace MyExamApi.Models
 {
     public partial class Attempt
     {
         public Attempt()
         {
-            Grades = new HashSet<Grade>();
+            UsersAnswers = new HashSet<UsersAnswer>();
         }
 
         public int Id { get; set; }
+        public DateTime? Date { get; set; }
         public int ExamId { get; set; }
-        public int UsersAnswersId { get; set; }
-        public DateTime? StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
-        public DateTime? Data { get; set; }
 
         public virtual Exam Exam { get; set; } = null!;
-        public virtual UsersAnswer UsersAnswers { get; set; } = null!;
-        public virtual ICollection<Grade> Grades { get; set; }
+        public virtual ICollection<UsersAnswer> UsersAnswers { get; set; }
     }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using MyExam.Models;
+using MyExamApi.Models;
 
-namespace MyExam.Data
+namespace MyExamApi.Data
 {
     public partial class MyExamContext : DbContext
     {
@@ -26,6 +26,14 @@ namespace MyExam.Data
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<UsersAnswer> UsersAnswers { get; set; } = null!;
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseMySql("name=mydb", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.4.24-mariadb"));
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.UseCollation("utf8_general_ci")
@@ -35,7 +43,7 @@ namespace MyExam.Data
             {
                 entity.ToTable("answers");
 
-                entity.HasIndex(e => e.QuestionId, "fk_Answers_Units1_idx");
+                entity.HasIndex(e => e.QuestionId, "fk_answers_question1_idx");
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
@@ -43,7 +51,8 @@ namespace MyExam.Data
 
                 entity.Property(e => e.Correct)
                     .HasColumnType("tinyint(4)")
-                    .HasColumnName("correct");
+                    .HasColumnName("correct")
+                    .HasDefaultValueSql("'0'");
 
                 entity.Property(e => e.Date)
                     .HasColumnType("datetime")
@@ -51,7 +60,8 @@ namespace MyExam.Data
 
                 entity.Property(e => e.Hide)
                     .HasColumnType("tinyint(4)")
-                    .HasColumnName("hide");
+                    .HasColumnName("hide")
+                    .HasDefaultValueSql("'0'");
 
                 entity.Property(e => e.Points).HasColumnName("points");
 
@@ -67,7 +77,7 @@ namespace MyExam.Data
                     .WithMany(p => p.Answers)
                     .HasForeignKey(d => d.QuestionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_Answers_Units1");
+                    .HasConstraintName("fk_answers_question1");
             });
 
             modelBuilder.Entity<Attempt>(entity =>
@@ -76,50 +86,30 @@ namespace MyExam.Data
 
                 entity.HasIndex(e => e.ExamId, "fk_attempts_exam1_idx");
 
-                entity.HasIndex(e => e.UsersAnswersId, "fk_attempts_users_answers1_idx");
-
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
                     .HasColumnName("id");
 
-                entity.Property(e => e.Data)
+                entity.Property(e => e.Date)
                     .HasColumnType("datetime")
-                    .HasColumnName("data");
-
-                entity.Property(e => e.EndTime)
-                    .HasColumnType("datetime")
-                    .HasColumnName("end_time");
+                    .HasColumnName("date");
 
                 entity.Property(e => e.ExamId)
                     .HasColumnType("int(11)")
                     .HasColumnName("exam_id");
-
-                entity.Property(e => e.StartTime)
-                    .HasColumnType("datetime")
-                    .HasColumnName("start_time");
-
-                entity.Property(e => e.UsersAnswersId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("users_answers_id");
 
                 entity.HasOne(d => d.Exam)
                     .WithMany(p => p.Attempts)
                     .HasForeignKey(d => d.ExamId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_attempts_exam1");
-
-                entity.HasOne(d => d.UsersAnswers)
-                    .WithMany(p => p.Attempts)
-                    .HasForeignKey(d => d.UsersAnswersId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_attempts_users_answers1");
             });
 
             modelBuilder.Entity<Exam>(entity =>
             {
                 entity.ToTable("exam");
 
-                entity.HasIndex(e => e.Owner, "fk_Assesments_users1_idx");
+                entity.HasIndex(e => e.UsersId, "fk_exam_users1_idx");
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
@@ -133,6 +123,10 @@ namespace MyExam.Data
                     .HasMaxLength(45)
                     .HasColumnName("description");
 
+                entity.Property(e => e.ExamsTime)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("examsTime");
+
                 entity.Property(e => e.Hide)
                     .HasColumnType("tinyint(4)")
                     .HasColumnName("hide");
@@ -141,15 +135,15 @@ namespace MyExam.Data
                     .HasMaxLength(45)
                     .HasColumnName("name");
 
-                entity.Property(e => e.Owner)
+                entity.Property(e => e.UsersId)
                     .HasColumnType("int(11)")
-                    .HasColumnName("owner");
+                    .HasColumnName("users_id");
 
-                entity.HasOne(d => d.OwnerNavigation)
+                entity.HasOne(d => d.Users)
                     .WithMany(p => p.Exams)
-                    .HasForeignKey(d => d.Owner)
+                    .HasForeignKey(d => d.UsersId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_Assesments_users1");
+                    .HasConstraintName("fk_exam_users1");
             });
 
             modelBuilder.Entity<Feedback>(entity =>
@@ -167,7 +161,7 @@ namespace MyExam.Data
                     .HasColumnName("exam_id");
 
                 entity.Property(e => e.Vote)
-                    .HasColumnType("enum('1','2','3','4','5')")
+                    .HasColumnType("int(11)")
                     .HasColumnName("vote");
 
                 entity.HasOne(d => d.Exam)
@@ -187,7 +181,7 @@ namespace MyExam.Data
 
                 entity.HasIndex(e => e.UsersId, "fk_Assesments_has_users_users1_idx");
 
-                entity.HasIndex(e => e.AttemptsId, "fk_grades_attempts1_idx");
+                entity.HasIndex(e => e.ExamId, "fk_grades_exam1_idx");
 
                 entity.HasIndex(e => e.Id, "id_UNIQUE")
                     .IsUnique();
@@ -201,21 +195,21 @@ namespace MyExam.Data
                     .HasColumnType("int(11)")
                     .HasColumnName("users_id");
 
-                entity.Property(e => e.AttemptsId)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("attempts_id");
-
                 entity.Property(e => e.Date)
                     .HasColumnType("datetime")
                     .HasColumnName("date");
 
+                entity.Property(e => e.ExamId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("exam_id");
+
                 entity.Property(e => e.Grade1).HasColumnName("grade");
 
-                entity.HasOne(d => d.Attempts)
+                entity.HasOne(d => d.Exam)
                     .WithMany(p => p.Grades)
-                    .HasForeignKey(d => d.AttemptsId)
+                    .HasForeignKey(d => d.ExamId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_grades_attempts1");
+                    .HasConstraintName("fk_grades_exam1");
 
                 entity.HasOne(d => d.Users)
                     .WithMany(p => p.Grades)
@@ -228,7 +222,7 @@ namespace MyExam.Data
             {
                 entity.ToTable("question");
 
-                entity.HasIndex(e => e.ExamId, "fk_Units_Assesments_idx");
+                entity.HasIndex(e => e.ExamId, "fk_question_exam1_idx");
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
@@ -264,7 +258,7 @@ namespace MyExam.Data
                     .WithMany(p => p.Questions)
                     .HasForeignKey(d => d.ExamId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_Units_Assesments");
+                    .HasConstraintName("fk_question_exam1");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -296,7 +290,7 @@ namespace MyExam.Data
                     .HasColumnName("password");
 
                 entity.Property(e => e.Type)
-                    .HasColumnType("enum('user','admin')")
+                    .HasMaxLength(45)
                     .HasColumnName("type");
             });
 
@@ -306,7 +300,9 @@ namespace MyExam.Data
 
                 entity.HasIndex(e => e.AnswersId, "fk_users_answers_answers1_idx");
 
-                entity.HasIndex(e => e.UsersId, "fk_users_assement_answers_users1_idx");
+                entity.HasIndex(e => e.AttemptsId, "fk_users_answers_attempts1_idx");
+
+                entity.HasIndex(e => e.UsersId, "fk_users_answers_users1_idx");
 
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
@@ -315,6 +311,10 @@ namespace MyExam.Data
                 entity.Property(e => e.AnswersId)
                     .HasColumnType("int(11)")
                     .HasColumnName("answers_id");
+
+                entity.Property(e => e.AttemptsId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("attempts_id");
 
                 entity.Property(e => e.Point).HasColumnName("point");
 
@@ -328,11 +328,17 @@ namespace MyExam.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_users_answers_answers1");
 
+                entity.HasOne(d => d.Attempts)
+                    .WithMany(p => p.UsersAnswers)
+                    .HasForeignKey(d => d.AttemptsId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_users_answers_attempts1");
+
                 entity.HasOne(d => d.Users)
                     .WithMany(p => p.UsersAnswers)
                     .HasForeignKey(d => d.UsersId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_users_assement_answers_users1");
+                    .HasConstraintName("fk_users_answers_users1");
             });
 
             OnModelCreatingPartial(modelBuilder);

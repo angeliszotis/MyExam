@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MyExam.Models
+namespace MyExamApi.Models
 {
     public partial class User
     {

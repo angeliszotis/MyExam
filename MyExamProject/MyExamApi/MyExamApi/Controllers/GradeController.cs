@@ -1,13 +1,13 @@
-﻿#nullable disable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyExam.Data;
-using MyExam.Models;
+using MyExamApi.Data;
+using MyExamApi.Models;
+using MyExamApi.Dtos;
 
 namespace MyExamApi.Controllers
 {
@@ -26,6 +26,10 @@ namespace MyExamApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Grade>>> GetGrades()
         {
+          if (_context.Grades == null)
+          {
+              return NotFound();
+          }
             return await _context.Grades.ToListAsync();
         }
 
@@ -33,6 +37,10 @@ namespace MyExamApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Grade>> GetGrade(int id)
         {
+          if (_context.Grades == null)
+          {
+              return NotFound();
+          }
             var grade = await _context.Grades.FindAsync(id);
 
             if (grade == null)
@@ -77,18 +85,39 @@ namespace MyExamApi.Controllers
         // POST: api/Grade
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Grade>> PostGrade(Grade grade)
+        public async Task<ActionResult<Grade>> CreateGrade(GradeDto request)
         {
-            _context.Grades.Add(grade);
+            var user = await _context.Users.FindAsync(request.UsersId);
+            var exam = await _context.Exams.FindAsync(request.ExamId);
+            DateTime localDate = DateTime.Now;
+
+            if (user == null)
+                return NotFound();
+
+            var newGrade = new Grade
+            {
+                Id = request.Id,
+                UsersId = request.UsersId,
+                Grade1 = request.Grade1,
+                Date = localDate,
+                Users = user,
+                Exam =exam
+            };
+
+            _context.Grades.Add(newGrade);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetGrade", new { id = grade.Id }, grade);
+            return await GetGrade(newGrade.UsersId);
         }
 
         // DELETE: api/Grade/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGrade(int id)
         {
+            if (_context.Grades == null)
+            {
+                return NotFound();
+            }
             var grade = await _context.Grades.FindAsync(id);
             if (grade == null)
             {
@@ -103,7 +132,7 @@ namespace MyExamApi.Controllers
 
         private bool GradeExists(int id)
         {
-            return _context.Grades.Any(e => e.Id == id);
+            return (_context.Grades?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

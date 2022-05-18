@@ -797,8 +797,6 @@ C:\Users\Stelios\Documents\Projects\MyExam\MyExamProject\MyExamApi\MyExamApi\obj
 C:\Users\Stelios\Documents\Projects\MyExam\MyExamProject\MyExamApi\MyExamApi\obj\Debug\net6.0\MyExamApi.csproj.CoreCompileInputs.cache
 C:\Users\Stelios\Documents\Projects\MyExam\MyExamProject\MyExamApi\MyExamApi\obj\Debug\net6.0\MyExamApi.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Stelios\Documents\Projects\MyExam\MyExamProject\MyExamApi\MyExamApi\obj\Debug\net6.0\MyExamApi.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Stelios\Documents\Projects\MyExam\MyExamProject\MyExamApi\MyExamApi\obj\Debug\net6.0\MyExamApi.RazorAssemblyInfo.cache
-C:\Users\Stelios\Documents\Projects\MyExam\MyExamProject\MyExamApi\MyExamApi\obj\Debug\net6.0\MyExamApi.RazorAssemblyInfo.cs
 C:\Users\Stelios\Documents\Projects\MyExam\MyExamProject\MyExamApi\MyExamApi\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\Stelios\Documents\Projects\MyExam\MyExamProject\MyExamApi\MyExamApi\obj\Debug\net6.0\staticwebassets.development.json
 C:\Users\Stelios\Documents\Projects\MyExam\MyExamProject\MyExamApi\MyExamApi\obj\Debug\net6.0\scopedcss\bundle\MyExamApi.styles.css

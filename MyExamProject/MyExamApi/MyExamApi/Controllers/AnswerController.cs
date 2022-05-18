@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyExam.Data;
-using MyExam.Models;
+using MyExamApi.Data;
+using MyExamApi.Models;
 
 namespace MyExamApi.Controllers
 {

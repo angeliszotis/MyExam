@@ -1,13 +1,13 @@
-﻿#nullable disable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyExam.Data;
-using MyExam.Models;
+using MyExamApi.Data;
+using MyExamApi.Dtos;
+using MyExamApi.Models;
 
 namespace MyExamApi.Controllers
 {
@@ -26,6 +26,10 @@ namespace MyExamApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Exam>>> GetExams()
         {
+          if (_context.Exams == null)
+          {
+              return NotFound();
+          }
             return await _context.Exams.ToListAsync();
         }
 
@@ -33,6 +37,10 @@ namespace MyExamApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Exam>> GetExam(int id)
         {
+          if (_context.Exams == null)
+          {
+              return NotFound();
+          }
             var exam = await _context.Exams.FindAsync(id);
 
             if (exam == null)
@@ -77,18 +85,38 @@ namespace MyExamApi.Controllers
         // POST: api/Exam
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Exam>> PostExam(Exam exam)
+        public async Task<ActionResult<Exam>> CreateExam(ExamDto request)
         {
-            _context.Exams.Add(exam);
+            var user = await _context.Users.FindAsync(request.UsersId);
+            DateTime localDate = DateTime.Now;
+
+            if (user == null)
+                return NotFound();
+
+            var newExam = new Exam  {
+                Id = request.Id,
+                UsersId = request.UsersId,
+                Name = request.Name,
+                Description = request.Description,
+                ExamsTime = request.ExamsTime,
+                Hide = 0,
+                Date = localDate,
+                Users = user,
+            };
+            _context.Exams.Add(newExam);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetExam", new { id = exam.Id }, exam);
+            return await GetExam(newExam.UsersId);
         }
 
         // DELETE: api/Exam/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteExam(int id)
         {
+            if (_context.Exams == null)
+            {
+                return NotFound();
+            }
             var exam = await _context.Exams.FindAsync(id);
             if (exam == null)
             {
@@ -103,7 +131,7 @@ namespace MyExamApi.Controllers
 
         private bool ExamExists(int id)
         {
-            return _context.Exams.Any(e => e.Id == id);
+            return (_context.Exams?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

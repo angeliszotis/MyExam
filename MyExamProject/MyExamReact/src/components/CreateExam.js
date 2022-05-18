@@ -8,14 +8,16 @@ import { createAPIEndpoint, ENDPOINTS } from '../api'
 import { useNavigate } from 'react-router-dom'
 
 const getFreshModel = () => ({
-    email: '',
-    password: ''
+    asdf: '',
+    name: '',
+    description: '',
+    examstime: ''
 }
 )
 
 
 
-export default function Login() {
+export default function CreateExam() {
 
     const { context, setContext, resetContext } = useStateContext();
     const navigate = useNavigate()
@@ -27,31 +29,27 @@ export default function Login() {
         handleInputChange
     } = useForm(getFreshModel);
 
-    const login = e => {
+    const createExam = e => {
+        values.usersId = '1';
+        console.log(values)
         e.preventDefault();
-        if (validate()) {
-            createAPIEndpoint(ENDPOINTS.register)
-                .post(values)
-                .then(res => {
-                    setContext({
-                        id: res.data.id
-                    })
-                    navigate('/exams')
-                    console.log(context)
+        createAPIEndpoint(ENDPOINTS.exam)
+            .post(values)
+            .then(res => {
+                console.log('i am here')
+
+            }
+            )
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
                 }
-                )
-                .catch(err => console.log(err)
-                )
-        }
+            });
     }
 
-    const validate = () => {
-        let temp = {}
-        temp.email = (/\S+@\S+\.\S+/).test(values.email) ? "" : "Email is not valid."
-        temp.password = values.password != "" ? "" : "This field is required."
-        setErrors(temp)
-        return Object.values(temp).every(x => x == "")
-    }
+
 
     return (
         <Center>
@@ -67,44 +65,35 @@ export default function Login() {
                             width: '90 %'
                         }
                     }}>
-                        <form noValidate autoComplete="off" onSubmit={login}>
+                        <form noValidate autoComplete="off" onSubmit={createExam}>
                             <TextField
-                                label="First Name"
-                                name="FirstName"
+                                label="Name"
+                                name="name"
                                 variant="outlined"
-                                value={values.FirstName}
+                                value={values.Name}
                                 onChange={handleInputChange}
-                                {...(errors.email && { error: true, helperText: errors.email })}
+                                {...(errors.name && { error: true, helperText: errors.name })}
                                 sx={{ width: '90%' }}
                             />
                             <TextField
-                                label="Last Name"
-                                name="LastName"
+                                label="Description of Exam"
+                                name="description"
                                 variant="outlined"
-                                value={values.LastName}
+                                value={values.Description}
                                 onChange={handleInputChange}
-                                {...(errors.email && { error: true, helperText: errors.email })}
+                                {...(errors.description && { error: true, helperText: errors.description })}
                                 sx={{ width: '90%' }}
                             />
                             <TextField
-                                label="@Email"
-                                name="email"
+                                label="Exams Time"
+                                name="examstime"
                                 variant="outlined"
-                                value={values.email}
+                                value={values.Examstime}
                                 onChange={handleInputChange}
-                                {...(errors.email && { error: true, helperText: errors.email })}
+                                {...(errors.examstime && { error: true, helperText: errors.examstime })}
                                 sx={{ width: '90%' }}
                             />
-                            <TextField
-                                label="Password"
-                                name="password"
-                                variant="outlined"
-                                type="password"
-                                value={values.password}
-                                onChange={handleInputChange}
-                                {...(errors.password && { error: true, helperText: errors.password })}
-                                sx={{ width: '90%' }}
-                            />
+
                             <Button
                                 type="submit"
                                 variant="contained"
