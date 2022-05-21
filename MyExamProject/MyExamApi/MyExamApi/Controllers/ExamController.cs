@@ -87,7 +87,7 @@ namespace MyExamApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Exam>> CreateExam(ExamDto request)
         {
-            var user = await _context.Users.FindAsync(request.UsersId);
+            var user = await _context.Users.FindAsync(request.Owner);
             DateTime localDate = DateTime.Now;
 
             if (user == null)
@@ -95,18 +95,18 @@ namespace MyExamApi.Controllers
 
             var newExam = new Exam  {
                 Id = request.Id,
-                UsersId = request.UsersId,
                 Name = request.Name,
                 Description = request.Description,
                 ExamsTime = request.ExamsTime,
-                Hide = 0,
+                NumberOfQuestions = request.NumberOfQuestions,
+                OwnerNavigation = user,
                 Date = localDate,
-                Users = user,
+    
             };
             _context.Exams.Add(newExam);
             await _context.SaveChangesAsync();
 
-            return await GetExam(newExam.UsersId);
+            return NoContent();
         }
 
         // DELETE: api/Exam/5

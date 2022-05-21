@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { createAPIEndpoint, ENDPOINTS, BASE_URL } from '../api'
 import useStateContext from '../hooks/useStateContext'
 import { useNavigate } from 'react-router'
-import { Card, CardContent, CardMedia, CardHeader, List, ListItemButton, Typography, Box, LinearProgress } from '@mui/material'
+import { Card, CardContent, CardHeader, List, ListItemButton, Typography, Box, LinearProgress } from '@mui/material'
 import { getFormatedTime } from '../helper'
+import { QuestionAnswerOutlined } from '@mui/icons-material'
 
 export default function Quiz() {
 
@@ -11,6 +12,7 @@ export default function Quiz() {
     const [answer, setAnswer] = useState([])
     const [qnIndex, setQnIndex] = useState(0)
     const [answerIndex, setAnswerIndex] = useState(0)
+    const [quizIndex, setQuiz] = useState(0)
     const [timeTaken, setTimeTaken] = useState(0)
     const { context, setContext } = useStateContext()
     const navigate = useNavigate()
@@ -29,13 +31,14 @@ export default function Quiz() {
             selectedOptions: []
         })
 
-        createAPIEndpoint(ENDPOINTS.question)
+        createAPIEndpoint(ENDPOINTS.examhasquestion)
             .fetchById(context.examid)
             .then(res => {
                 setQns(res.data)
+                console.log(res.data)
                 startTimer()
                 createAPIEndpoint(ENDPOINTS.answer)
-                    .fetchById(res.data[0].id)
+                    .fetchById(res.data[quizIndex].questionId)
                     .then(res => {
                         setAnswer(res.data)
                     })
@@ -48,11 +51,9 @@ export default function Quiz() {
 
     }, [])
 
-    const updateAnswer = (qnId, AnsId, dataPoints) => {
+    const updateAnswer = (qnId, AnsId, dataPoints, qIndex) => {
 
-        // console.log(qnId)
-        // console.log(qns.length + 'is ' + 'length is ' + length)
-
+        console.log(AnsId)
         const temp = [...context.selectedOptions]
         temp.push({
             questionId: qnId,
@@ -60,13 +61,16 @@ export default function Quiz() {
             answerPoints: dataPoints
 
         })
-        if (qnId < qns.length) {
+
+        if (qIndex < qns.length - 1) {
             setContext({ selectedOptions: [...temp] })
             setQnIndex(qnIndex + 1)
             createAPIEndpoint(ENDPOINTS.answer)
-                .fetchById(qnId + 1)
+                .fetchById(qns[quizIndex + 1].questionId)
                 .then(res => {
                     setAnswer(res.data)
+                    console.log(res.data)
+                    setQuiz(quizIndex + 1)
                     // console.log(res.data)
                 })
                 .catch(err => { console.log(err); })
@@ -88,20 +92,20 @@ export default function Quiz() {
                     '& .MuiCardHeader-action': { m: 0, alignSelf: 'center' }
                 }}>
                 <CardHeader
-                    title={'Question ' + (qnIndex + 1) + ' of ' + qns.length}
+                    title={'Question ' + (quizIndex + 1) + ' of ' + qns.length}
                     action={<Typography>{getFormatedTime(timeTaken)}</Typography>} />
                 <Box>
-                    <LinearProgress variant="determinate" value={(qns[qnIndex].id) * 100 / qns.length} />
+                    <LinearProgress variant="determinate" value={(quizIndex + 1) * 100 / qns.length} />
                 </Box>
 
                 <CardContent>
                     <Typography variant="h6">
-                        {qns[qnIndex].title}
+                        {qns[quizIndex].title}
                     </Typography>
                     <List>
                         {answer.map((data, idx) => (
 
-                            <ListItemButton disableRipple key={idx} onClick={() => updateAnswer(data.questionId, data.id, data.points)}>
+                            <ListItemButton value={data.id} disableRipple key={idx} onClick={() => updateAnswer(data.questionId, data.id, data.points, quizIndex)}>
                                 <div>
                                     <b>{String.fromCharCode(65 + idx) + " . "}</b>{data.title} {data.questionId}
                                 </div>

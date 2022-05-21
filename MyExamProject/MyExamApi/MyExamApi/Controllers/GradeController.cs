@@ -101,13 +101,13 @@ namespace MyExamApi.Controllers
                 Grade1 = request.Grade1,
                 Date = localDate,
                 Users = user,
-                Exam =exam
+                ExamId = request.ExamId,
             };
 
             _context.Grades.Add(newGrade);
             await _context.SaveChangesAsync();
 
-            return await GetGrade(newGrade.UsersId);
+            return NoContent();
         }
 
         // DELETE: api/Grade/5

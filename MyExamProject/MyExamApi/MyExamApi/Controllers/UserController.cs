@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyExamApi.Models;
 using MyExamApi.Data;
+using System.Text;
+using System.Security.Cryptography;
+
+
 
 namespace MyExamApi.Controllers
 {
@@ -100,6 +104,7 @@ namespace MyExamApi.Controllers
         [Route("Login")]
         public async Task<ActionResult<User>> Login(User user)
         {
+            user.Password = ConvertStringtoMD5(user.Password);
             var temp = _context.Users.Where(
                 x => x.Email == user.Email && x.Password == user.Password)
                 .FirstOrDefault();
@@ -124,9 +129,10 @@ namespace MyExamApi.Controllers
                 DateTime localDate = DateTime.Now;
                 user.Type = "user";
                 user.Date = localDate;
+                user.Password = ConvertStringtoMD5(user.Password);
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
-                user = temp;
+                //user = temp;
             }
             else
                 return BadRequest("Email already exists");
@@ -154,6 +160,19 @@ namespace MyExamApi.Controllers
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
+        }
+
+        public static string ConvertStringtoMD5(string strword)
+        {
+            MD5 md5 = MD5.Create();
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(strword);
+            byte[] hash = md5.ComputeHash(inputBytes);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("x2"));
+            }
+            return sb.ToString();
         }
     }
 }

@@ -11,6 +11,7 @@ import CreateExam from './components/CreateExam';
 import Profile from './components/Profile';
 import MyGrades from './components/MyGrades';
 import MyCreatedExams from './components/MyCreatedExams';
+import CreateQuestions from './components/CreateQuestions';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/mygrades" element={<MyGrades />} />
             <Route path="/mycreatedexams" element={<MyCreatedExams />} />
+            <Route path="/createquestions" element={<CreateQuestions />} />
           </Route>
         </Route>
       </Routes>

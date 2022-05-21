@@ -8,9 +8,10 @@ import { createAPIEndpoint, ENDPOINTS } from '../api'
 import { useNavigate } from 'react-router-dom'
 
 const getFreshModel = () => ({
-    asdf: '',
+
     name: '',
     description: '',
+    numberOfQuestions: '',
     examstime: ''
 }
 )
@@ -29,15 +30,22 @@ export default function CreateExam() {
         handleInputChange
     } = useForm(getFreshModel);
 
+
     const createExam = e => {
-        values.usersId = '1';
-        console.log(values)
+        // console.log(context.id)
+        values.owner = context.id;
+        // console.log(values)
         e.preventDefault();
         createAPIEndpoint(ENDPOINTS.exam)
             .post(values)
             .then(res => {
-                console.log('i am here')
-
+                setContext({
+                    examid: res.data.id,
+                    examname: res.data.name,
+                    numberOfQuestions: res.data.numberOfQuestions
+                })
+                console.log(res.data)
+                navigate('/mycreatedexams')
             }
             )
             .catch(function (error) {
@@ -93,12 +101,21 @@ export default function CreateExam() {
                                 {...(errors.examstime && { error: true, helperText: errors.examstime })}
                                 sx={{ width: '90%' }}
                             />
+                            <TextField
+                                label="Number of Questions"
+                                name="numberOfQuestions"
+                                variant="outlined"
+                                value={values.numberOfQuestions}
+                                onChange={handleInputChange}
+                                {...(errors.numberOfQuestions && { error: true, helperText: errors.numberOfQuestions })}
+                                sx={{ width: '90%' }}
+                            />
 
                             <Button
                                 type="submit"
                                 variant="contained"
                                 size="large"
-                                sx={{ width: '90%' }}> Register
+                                sx={{ width: '90%' }}> Create
                             </Button>
 
 

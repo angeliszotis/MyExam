@@ -36,8 +36,11 @@ export default function Login() {
                     setContext({
                         id: res.data.id
                     })
-                    navigate('/exams')
+
+                    console.log(res.data)
                     console.log(context)
+                    navigate('/exams')
+
                 }
                 )
                 .catch(err => console.log(err)

@@ -28,7 +28,7 @@ export default function Result() {
                     .post(ids)
                     .then(res => {
                         calculateScore(res.data)
-                        console.log(res.data)
+                        // console.log(res.data)
                     })
                     .catch(err => console.log(err))
             }, [])
@@ -37,6 +37,19 @@ export default function Result() {
 
     const calculateScore = (correctAnswers) => {
         setScore((correctAnswers.length * 100 / qns).toFixed(1))
+        createAPIEndpoint(ENDPOINTS.grade)
+            .post(score)
+            .then(res => {
+                setContext({
+                    id: res.data.id
+                })
+                // navigate('exams')
+                // console.log(context)
+            }
+            )
+            .catch(err => console.log(err)
+            )
+
     }
 
     const restart = () => {

@@ -9,6 +9,7 @@ const getFreshContext = () => {
         localStorage.setItem('context', JSON.stringify({
             id: 0,
             examid: 0,
+            numberOfQuestions: 0,
             selectedOptions: []
         }))
     return JSON.parse(localStorage.getItem('context'))

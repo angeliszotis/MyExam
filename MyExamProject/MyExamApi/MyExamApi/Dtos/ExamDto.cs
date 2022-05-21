@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public int UsersId { get; set; }
+        public int Owner { get; set; }
 
         public string? Name { get; set; }
 
@@ -12,8 +12,7 @@
 
         public DateTime? Date { get; set; }
 
-        public int Hide { get; set; }
-
+        public int NumberOfQuestions { get; set; }
         public int ExamsTime { get; set; }
 
     }

@@ -1,5 +1,4 @@
-﻿#nullable disable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyExamApi.Data;
 using MyExamApi.Models;
+using MyExamApi.Dtos;
 
 namespace MyExamApi.Controllers
 {
@@ -23,16 +23,24 @@ namespace MyExamApi.Controllers
         }
 
         // GET: api/Question
-        [HttpGet("{selectedExam}")]
-        public async Task<ActionResult<IEnumerable<Question>>> GetQuestions(int selectedExam)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Question>>> GetQuestions()
         {
-            return await _context.Questions.Where(c => c.ExamId== selectedExam).ToListAsync();
+          if (_context.Questions == null)
+          {
+              return NotFound();
+          }
+            return await _context.Questions.ToListAsync();
         }
 
         // GET: api/Question/5
-        //[HttpGet("{id}")]
+        [HttpGet("{id}")]
         //public async Task<ActionResult<Question>> GetQuestion(int id)
         //{
+        //  if (_context.Questions == null)
+        //  {
+        //      return NotFound();
+        //  }
         //    var question = await _context.Questions.FindAsync(id);
 
         //    if (question == null)
@@ -42,6 +50,20 @@ namespace MyExamApi.Controllers
 
         //    return question;
         //}
+
+        public async Task<IEnumerable<QuestionDto>> GetQuestion(int id)
+        {
+            var asdf = (from e in _context.ExamHasQuestions
+                        join q in _context.Questions on e.QuestionId equals q.Id
+                        where e.ExamId == id
+
+                        select new QuestionDto()
+                        {
+                            Id = q.Id,
+                        }).ToListAsync();
+
+            return await asdf;
+        }
 
         // PUT: api/Question/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -79,6 +101,10 @@ namespace MyExamApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Question>> PostQuestion(Question question)
         {
+          if (_context.Questions == null)
+          {
+              return Problem("Entity set 'MyExamContext.Questions'  is null.");
+          }
             _context.Questions.Add(question);
             await _context.SaveChangesAsync();
 
@@ -89,6 +115,10 @@ namespace MyExamApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteQuestion(int id)
         {
+            if (_context.Questions == null)
+            {
+                return NotFound();
+            }
             var question = await _context.Questions.FindAsync(id);
             if (question == null)
             {
@@ -103,7 +133,7 @@ namespace MyExamApi.Controllers
 
         private bool QuestionExists(int id)
         {
-            return _context.Questions.Any(e => e.Id == id);
+            return (_context.Questions?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

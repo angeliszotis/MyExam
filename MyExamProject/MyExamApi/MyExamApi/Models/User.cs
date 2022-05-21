@@ -9,7 +9,6 @@ namespace MyExamApi.Models
         {
             Exams = new HashSet<Exam>();
             Grades = new HashSet<Grade>();
-            UsersAnswers = new HashSet<UsersAnswer>();
         }
 
         public int Id { get; set; }
@@ -22,6 +21,5 @@ namespace MyExamApi.Models
 
         public virtual ICollection<Exam> Exams { get; set; }
         public virtual ICollection<Grade> Grades { get; set; }
-        public virtual ICollection<UsersAnswer> UsersAnswers { get; set; }
     }
 }
