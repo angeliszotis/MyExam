@@ -112,7 +112,7 @@ export default function Quiz() {
 
                             <ListItemButton value={data.id} disableRipple key={idx} onClick={() => updateAnswer(data.questionId, data.id, data.points, quizIndex)}>
                                 <div>
-                                    <b>{String.fromCharCode(65 + idx) + " . "}</b>{data.title} {data.questionId}
+                                    <b>{String.fromCharCode(65 + idx) + " . "}</b>{data.title}
                                 </div>
 
                             </ListItemButton>
