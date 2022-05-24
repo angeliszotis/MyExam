@@ -16,6 +16,7 @@ export const ENDPOINTS = {
     feedback: 'feedback',
     question: 'question',
     createquestion: 'createquestion',
+    examhasquestion: 'examhasquestion',
     createanswer: 'createanswer',
 }
 

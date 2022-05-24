@@ -89,30 +89,26 @@ namespace MyExamApi.Controllers
         // POST: api/ExamHasQuestion
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ExamHasQuestion>> PostExamHasQuestion(ExamHasQuestion examHasQuestion)
+        public async Task<ActionResult<ExamHasQuestion>> PostExamHasQuestion(ExamQuestionDto examHasQuestion)
         {
-          if (_context.ExamHasQuestions == null)
-          {
-              return Problem("Entity set 'MyExamContext.ExamHasQuestions'  is null.");
-          }
-            _context.ExamHasQuestions.Add(examHasQuestion);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (ExamHasQuestionExists(examHasQuestion.ExamId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var exam = await _context.Exams.FindAsync(examHasQuestion.ExamId);
+            var question = await _context.Questions.FindAsync(examHasQuestion.QuestionId);
 
-            return CreatedAtAction("GetExamHasQuestion", new { id = examHasQuestion.ExamId }, examHasQuestion);
+            if (exam == null)
+                return NotFound();
+
+            var newExamHasQuestion = new ExamHasQuestion
+            {
+                QuestionId = examHasQuestion.QuestionId,
+                ExamId = examHasQuestion.ExamId,
+                Exam = exam,
+                Question = question,
+            };
+
+            _context.ExamHasQuestions.Add(newExamHasQuestion);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
         // DELETE: api/ExamHasQuestion/5
