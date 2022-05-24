@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyExamApi.Data;
 using MyExamApi.Models;
+using MyExamApi.Dtos;
 
 namespace MyExamApi.Controllers
 {
@@ -79,12 +80,26 @@ namespace MyExamApi.Controllers
         // POST: api/Answer
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Answer>> PostAnswer(Answer answer)
+        public async Task<ActionResult<Answer>> PostAnswer(AnswerDto request)
         {
-            _context.Answers.Add(answer);
+            var question = await _context.Questions.FindAsync(request.QuestionId);
+            DateTime localDate = DateTime.Now;
+            if (question == null)
+                return NotFound();
+
+            var newAnswer =  new Answer
+            {
+                Id = request.Id,
+                Correct = request.Correct,
+                Title = request.Title,
+                Question = question,
+                Date = localDate,
+            };
+
+            _context.Answers.Add(newAnswer);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAnswer", new { id = answer.Id }, answer);
+            return CreatedAtAction("GetAnswer", new { id = newAnswer.Id }, newAnswer);
         }
 
         //[Route("retrieveNumberOfAnswers")]

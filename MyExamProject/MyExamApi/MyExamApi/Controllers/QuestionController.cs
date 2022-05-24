@@ -105,6 +105,10 @@ namespace MyExamApi.Controllers
           {
               return Problem("Entity set 'MyExamContext.Questions'  is null.");
           }
+            DateTime localDate = DateTime.Now;
+            question.Date = localDate;
+            question.Type = "radio";
+
             _context.Questions.Add(question);
             await _context.SaveChangesAsync();
 

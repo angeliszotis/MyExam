@@ -30,13 +30,25 @@ export default function CreateExam() {
         setErrors,
         handleInputChange
     } = useForm(getFreshModel);
-    const steps = ['Step 1', 'Step2', 'Step 3'];
-    const stepDescription = ['Description 1', 'Description 2', 'Description 3'];
 
     const createQuestions = e => {
-        setContext({
-            examid: values.questionsNumber
-        })
+        e.preventDefault();
+        createAPIEndpoint(ENDPOINTS.question)
+            .post(values)
+            .then(res => {
+                setContext({
+                    questionsNumber: values.difficulty,
+                    questionId: res.data.id,
+                    title: res.data.title
+
+                })
+                navigate('/createanswers')
+                console.log(context)
+            }
+            )
+            .catch(err => console.log(err)
+            )
+
 
     }
 
@@ -47,11 +59,7 @@ export default function CreateExam() {
             <Card sx={{ width: 400 }}>
 
                 <CardContent sx={{ textAlign: 'center' }}>
-                    <ProgressStepper
-                        steps={steps}
-                        stepDescription={stepDescription}>
 
-                    </ProgressStepper>
                     <Typography variant="h5" sx={{ my: 3 }}>
                         Title of exam tbt
                         question tade linear
@@ -81,23 +89,23 @@ export default function CreateExam() {
                                 {...(errors.difficulty && { error: true, helperText: errors.difficulty })}
                                 sx={{ width: '90%' }}
                             />
-                            <FormLabel id="demo-radio-buttons-group-label">Type of question</FormLabel>
-                            <RadioGroup
+                            {/* <FormLabel id="demo-radio-buttons-group-label">Type of question</FormLabel> */}
+                            {/* <RadioGroup
                                 style={{ display: 'block' }}
                                 row
                                 aria-labelledby="demo-radio-buttons-group-label"
                                 defaultValue="radio"
-                                name="radio-buttons-group"
+                                name="type"
                             >
                                 <FormControlLabel value="radio" control={<Radio />} label="Radio" />
                                 <FormControlLabel value="checkbox" control={<Radio />} label="Checkbox" />
-                            </RadioGroup>
+                            </RadioGroup> */}
 
                             <Button
                                 type="submit"
                                 variant="contained"
                                 size="large"
-                                sx={{ width: '90%' }}> Create question
+                                sx={{ width: '90%', m: 1 }}> Create question
                             </Button>
 
 

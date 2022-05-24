@@ -13,7 +13,9 @@ export const ENDPOINTS = {
     examhasquestion: 'examhasquestion',
     grade: 'grade',
     feedback: 'feedback',
-    question: 'question'
+    question: 'question',
+    createquestion: 'createquestion',
+    createanswer: 'createanswer',
 }
 
 export const createAPIEndpoint = endpoint => {
