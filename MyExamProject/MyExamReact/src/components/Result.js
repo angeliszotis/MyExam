@@ -80,7 +80,7 @@ export default function Result() {
             })
             .then(res => {
                 setContext({
-                    id: res.data.id
+                    // id: res.data.id
                 })
                 // navigate('exams')
                 // console.log(context)

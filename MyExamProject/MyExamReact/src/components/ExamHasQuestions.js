@@ -73,7 +73,7 @@ export default function Exams() {
         createAPIEndpoint(ENDPOINTS.examhasquestion)
             .post({
                 'questionId': questionId,
-                'examId': context.id
+                'examId': context.examid
             })
             .then(res => {
 
