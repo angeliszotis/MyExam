@@ -13,6 +13,7 @@ import MyGrades from './components/MyGrades';
 import MyCreatedExams from './components/MyCreatedExams';
 import CreateQuestions from './components/CreateQuestions';
 import CreateAnswers from './components/CreateAnswers';
+import ExamHasQuestions from './components/ExamHasQuestions';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <Route path="/mycreatedexams" element={<MyCreatedExams />} />
             <Route path="/createquestions" element={<CreateQuestions />} />
             <Route path="/createanswers" element={<CreateAnswers />} />
+            <Route path="/examhasquestions" element={<ExamHasQuestions />} />
           </Route>
         </Route>
       </Routes>

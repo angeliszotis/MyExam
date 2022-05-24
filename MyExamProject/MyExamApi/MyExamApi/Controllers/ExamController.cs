@@ -35,13 +35,13 @@ namespace MyExamApi.Controllers
 
         // GET: api/Exam/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Exam>> GetExam(int id)
+        public async Task<ActionResult<IEnumerable<Exam>>> GetExam(int id)
         {
           if (_context.Exams == null)
           {
               return NotFound();
           }
-            var exam = await _context.Exams.FindAsync(id);
+            var exam = await _context.Exams.Where(c => c.Owner == id).ToListAsync();
 
             if (exam == null)
             {

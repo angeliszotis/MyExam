@@ -32,6 +32,11 @@ let pages = [
         "id": "2",
         "text": "Take Exams",
         "route": "exams"
+    },
+    {
+        "id": "3",
+        "text": "My Exams",
+        "route": "mycreatedexams"
     }
 ]
 
