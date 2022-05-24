@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyExamApi.Data;
 using MyExamApi.Models;
+using MyExamApi.Dtos;
 
 namespace MyExamApi.Controllers
 {
@@ -77,12 +78,28 @@ namespace MyExamApi.Controllers
         // POST: api/Feedback
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Feedback>> PostFeedback(Feedback feedback)
+        public async Task<ActionResult<Feedback>> PostFeedback(FeedbackDto request)
         {
-            _context.Feedbacks.Add(feedback);
+        
+            var exam = await _context.Exams.FindAsync(request.ExamId);
+            DateTime localDate = DateTime.Now;
+
+            if (exam == null)
+                return NotFound();
+
+            var newFeedback = new Feedback
+            {
+                Id = request.Id,
+                Vote = request.Vote,
+                Exam = exam,
+                ExamId = request.ExamId,
+
+            };
+
+            _context.Feedbacks.Add(newFeedback);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFeedback", new { id = feedback.Id }, feedback);
+            return NoContent();
         }
 
         // DELETE: api/Feedback/5

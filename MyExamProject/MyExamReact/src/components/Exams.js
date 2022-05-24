@@ -26,7 +26,7 @@ export default function Exams() {
     const [qns, setQns] = useState([])
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const { setContext } = useStateContext();
+    const { context, setContext } = useStateContext()
     const navigate = useNavigate()
 
     // const { context, useStateContext } = useStateContext()
@@ -58,7 +58,8 @@ export default function Exams() {
     const startExam = (examId) => {
         // console.log(examId)
         setContext({
-            examid: examId
+            examid: examId,
+            id: context.id
 
         })
         navigate('/quiz')

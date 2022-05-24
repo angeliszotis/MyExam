@@ -6,6 +6,8 @@ import { createAPIEndpoint, ENDPOINTS } from '../api'
 import { getFormatedTime } from '../helper';
 import useStateContext from '../hooks/useStateContext'
 import { green, red } from '@mui/material/colors';
+import Rating from '@mui/material/Rating';
+import { ExpandMoreSharp } from '@mui/icons-material';
 
 
 
@@ -15,6 +17,9 @@ export default function Result() {
     const [qns, setQns] = useState([])
     const [showAlert, setShowAlert] = useState(false)
     const navigate = useNavigate()
+    const [value, setValue] = React.useState(0);
+    const [gradeBool, setGradeBool] = React.useState(0);
+
 
     useEffect(() => {
 
@@ -28,6 +33,7 @@ export default function Result() {
                     .post(ids)
                     .then(res => {
                         calculateScore(res.data)
+
                         // console.log(res.data)
                     })
                     .catch(err => console.log(err))
@@ -37,8 +43,41 @@ export default function Result() {
 
     const calculateScore = (correctAnswers) => {
         setScore((correctAnswers.length * 100 / qns).toFixed(1))
+        // console.log("score is " + score)
+        // console.log("userid is " + context.id)
+        // console.log("examdi is " + context.examid)
+
+    }
+
+
+
+    const insertGrade = () => {
         createAPIEndpoint(ENDPOINTS.grade)
-            .post(score)
+            .post({
+                'grade1': score,
+                'usersId': context.id,
+                'examId': context.examid
+
+            })
+            .then(res => {
+            }
+            )
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                }
+            });
+        setGradeBool(true)
+    }
+
+    const updateFeedback = (newValue) => {
+        createAPIEndpoint(ENDPOINTS.feedback)
+            .post({
+                'examId': context.examid,
+                'vote': newValue
+            })
             .then(res => {
                 setContext({
                     id: res.data.id
@@ -49,15 +88,6 @@ export default function Result() {
             )
             .catch(err => console.log(err)
             )
-
-    }
-
-    const restart = () => {
-        setContext({
-            timeTaken: 0,
-            selectedOptions: []
-        })
-        navigate("/quiz")
     }
 
     return (
@@ -79,11 +109,21 @@ export default function Result() {
                         </Typography>
                         <Button variant="contained"
                             sx={{ mx: 1 }}
+                            disabled={gradeBool}
                             size="small"
-                            onClick={restart}>
-                            Re-try
+                            onClick={() => insertGrade()}>
+                            Submit grade
                         </Button>
-
+                        <Typography component="legend">Controlled</Typography>
+                        <Rating
+                            name="simple-controlled"
+                            value={value}
+                            disabled={value > 0}
+                            onChange={(event, newValue) => {
+                                updateFeedback(newValue);
+                                setValue(newValue);
+                            }}
+                        />
                     </CardContent>
                 </Box>
                 <CardMedia
@@ -91,6 +131,7 @@ export default function Result() {
                     sx={{ width: 220, height: 250 }}
                     image="./finish.png"
                 />
+
             </Card>
             {/* <Answer qnAnswers={qnAnswers} /> */}
         </>

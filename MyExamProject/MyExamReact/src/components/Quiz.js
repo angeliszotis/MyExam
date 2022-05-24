@@ -35,7 +35,7 @@ export default function Quiz() {
             .fetchById(context.examid)
             .then(res => {
                 setQns(res.data)
-                console.log(res.data)
+                // console.log(res.data)
                 startTimer()
                 createAPIEndpoint(ENDPOINTS.answer)
                     .fetchById(res.data[quizIndex].questionId)
@@ -53,7 +53,7 @@ export default function Quiz() {
 
     const updateAnswer = (qnId, AnsId, dataPoints, qIndex) => {
 
-        console.log(AnsId)
+        // console.log(AnsId)
         const temp = [...context.selectedOptions]
         temp.push({
             questionId: qnId,
@@ -69,7 +69,7 @@ export default function Quiz() {
                 .fetchById(qns[quizIndex + 1].questionId)
                 .then(res => {
                     setAnswer(res.data)
-                    console.log(res.data)
+                    // console.log(res.data)
                     setQuiz(quizIndex + 1)
                     // console.log(res.data)
                 })
@@ -77,7 +77,12 @@ export default function Quiz() {
         }
         else {
             let questionsCount = qnIndex + 1
-            setContext({ selectedOptions: [...temp], timeTaken, questionsCount })
+            setContext({
+                selectedOptions: [...temp],
+                timeTaken: timeTaken,
+                questionsCount: questionsCount,
+                id: context.id
+            })
             navigate("/result")
         }
     }

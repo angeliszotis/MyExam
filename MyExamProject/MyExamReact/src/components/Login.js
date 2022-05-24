@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box } from '@mui/system'
-import { Link, Button, Card, CardContent, TextField, Typography } from '@mui/material'
+import { Link, Button, Card, CardContent, TextField, Typography, Alert } from '@mui/material'
 import Center from './Center'
 import useForm from "../hooks/useForm"
 import useStateContext from '../hooks/useStateContext'
@@ -17,6 +17,7 @@ const getFreshModel = () => ({
 
 export default function Login() {
 
+    const [message, setMessage] = useState([])
     const { context, setContext, resetContext } = useStateContext();
     const navigate = useNavigate()
     const {
@@ -101,13 +102,16 @@ export default function Login() {
                             <Link component="button" underline='hover' onClick={() => navigate('/register')} variant="h6" sx={{ my: 3 }}>
                                 Click here to register
                             </Link>
+                            {/* <Alert severity="warning" color="info">
+                                {message}
+                            </Alert> */}
 
                         </form>
                     </Box>
                 </CardContent>
 
             </Card>
-        </Center>
+        </Center >
 
     )
 }

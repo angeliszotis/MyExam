@@ -102,6 +102,7 @@ namespace MyExamApi.Controllers
                 Date = localDate,
                 Users = user,
                 ExamId = request.ExamId,
+
             };
 
             _context.Grades.Add(newGrade);
