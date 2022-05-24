@@ -9,6 +9,7 @@ export const ENDPOINTS = {
     register: 'user/register',
     exam: 'exam',
     answer: 'answer/retrieveanswers',
+    addanswer: 'answer',
     result: 'answer/retrievecorrectanswers',
     examhasquestion: 'examhasquestion',
     grade: 'grade',

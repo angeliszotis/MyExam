@@ -80,26 +80,43 @@ namespace MyExamApi.Controllers
         // POST: api/Answer
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Answer>> PostAnswer(AnswerDto request)
+        public async Task<ActionResult<Answer>> PostAnswer(List<AnswerDto> answerobj)
         {
-            var question = await _context.Questions.FindAsync(request.QuestionId);
-            DateTime localDate = DateTime.Now;
-            if (question == null)
-                return NotFound();
-
-            var newAnswer =  new Answer
+            foreach (AnswerDto AnswerDto in answerobj)
             {
-                Id = request.Id,
-                Correct = request.Correct,
-                Title = request.Title,
-                Question = question,
-                Date = localDate,
-            };
+                var question = await _context.Questions.FindAsync(AnswerDto.QuestionId);
+                DateTime localDate = DateTime.Now;
+                var newAnswer =  new Answer
+                {
+   
+                    Correct = AnswerDto.Correct,
+                    Title = AnswerDto.Title,
+                    Question = question,
+                    Date = localDate,
+                };
+                _context.Answers.Add(newAnswer);
+                await _context.SaveChangesAsync();
+            }
+            return  Ok();
 
-            _context.Answers.Add(newAnswer);
-            await _context.SaveChangesAsync();
+            //var question = await _context.Questions.FindAsync(request.QuestionId);
+            //DateTime localDate = DateTime.Now;
+            //if (question == null)
+            //    return NotFound();
 
-            return CreatedAtAction("GetAnswer", new { id = newAnswer.Id }, newAnswer);
+            //var newAnswer =  new Answer
+            //{
+            //    Id = request.Id,
+            //    Correct = request.Correct,
+            //    Title = request.Title,
+            //    Question = question,
+            //    Date = localDate,
+            //};
+
+            //_context.Answers.Add(newAnswer);
+            //await _context.SaveChangesAsync();
+
+            //return CreatedAtAction("GetAnswer", new { id = newAnswer.Id }, newAnswer);
         }
 
         //[Route("retrieveNumberOfAnswers")]
